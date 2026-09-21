@@ -17,8 +17,8 @@ export const SITE = {
  * hides the link instead of pointing at an invented repository.
  */
 export const PACKAGE_LINKS: { github: string | null; npm: string | null } = {
-  github: null,
-  npm: null,
+  github: "https://github.com/rhiaji/hivex-sdk",
+  npm: "https://www.npmjs.com/package/hivexph-sdk",
 };
 
 export const versionLabel = `v${SITE.version}`;
