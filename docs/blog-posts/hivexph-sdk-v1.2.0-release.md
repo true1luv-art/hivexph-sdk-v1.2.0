@@ -6,7 +6,7 @@
 
 Hello Hive! 👋
 
-This is my first post here, and I’m excited to share something I’ve been building for the ecosystem: **hivexph-sdk**, a reusable TypeScript SDK for the Hive blockchain.
+This is my first post about this project, and I’m excited to share something I’ve been building for the ecosystem: **hivexph-sdk**, a reusable TypeScript SDK for the Hive blockchain.
 
 If you’re building apps, games, marketplaces, bots, or services on Hive, you probably know the drill. You want to read blocks, listen for `custom_json` operations, send or validate payments, issue tokens, or create NFT collections — and you end up wiring together RPC calls, payload parsers, signing logic, Hive Keychain browser flows, and Hive Engine contract actions by hand. It works, but it’s a lot of plumbing before you ever get to your actual product.
 
@@ -348,7 +348,7 @@ npm install hivexph-sdk
 
 The docs site with the full API reference and live playground is at **https://hivexph-sdk-frontend.vercel.app/**, and the source is on GitHub at **https://github.com/rhiaji/hivex-sdk**.
 
-This is my first time sharing a project on Hive, so feedback, issues, and ideas are very welcome — drop a comment below or open an issue on GitHub. Thanks for reading, and see you on-chain! 🐝
+This is my first post about hivexph-sdk, so feedback, issues, and ideas are very welcome — drop a comment below or open an issue on GitHub. Thanks for reading, and see you on-chain! 🐝
 
 ---
 
