@@ -68,20 +68,23 @@ export function TopNav() {
 
           <div className="ml-auto flex items-center gap-3">
             <SearchDialog />
-            <span className="hidden font-mono text-[11px] text-chrome-muted sm:inline">
-              {versionLabel}
-            </span>
             {PACKAGE_LINKS.github && (
               <a
                 href={PACKAGE_LINKS.github}
-                className="text-[13px] text-chrome-muted transition-colors hover:text-chrome-foreground"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub repository"
+                title="GitHub repository"
+                className="inline-flex shrink-0 items-center justify-center text-chrome-muted transition-colors hover:text-chrome-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
-                GitHub
+                <Github className="size-5" />
               </a>
             )}
             {PACKAGE_LINKS.npm && (
               <a
                 href={PACKAGE_LINKS.npm}
+                target="_blank"
+                rel="noreferrer"
                 className="text-[13px] text-chrome-muted transition-colors hover:text-chrome-foreground"
               >
                 NPM
