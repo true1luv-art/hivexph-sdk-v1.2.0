@@ -6,15 +6,17 @@
 
 Hello Hive! 👋
 
-This is my first post about this project, and I’m excited to share something I’ve been building for the ecosystem: **hivexph-sdk**, a reusable TypeScript SDK for the Hive blockchain.
+Welcome to my newly created AI slop SDK — **hivexph-sdk**, a reusable TypeScript SDK for the Hive blockchain.
 
 > 📝 *This post was generated with the help of AI to summarize the full feature set of the SDK from the README, API reference, and changelog.*
 
-If you’re building apps, games, marketplaces, bots, or services on Hive, you probably know the drill. You want to read blocks, listen for `custom_json` operations, send or validate payments, issue tokens, or create NFT collections — and you end up wiring together RPC calls, payload parsers, signing logic, Hive Keychain browser flows, and Hive Engine contract actions by hand. It works, but it’s a lot of plumbing before you ever get to your actual product.
+I built this slop to stop rewriting the same Hive plumbing in every project: connecting to RPC nodes, watching blocks, parsing `custom_json`, sending and validating payments, issuing tokens, and creating NFT collections. It was a lot of repetitive wiring before I could ever get to the actual product, so I packaged it all into one typed SDK with a single, predictable API.
 
 **hivexph-sdk is that plumbing, packaged up and typed.**
 
 Version **1.2.0** is out now, and it adds the three pieces I kept needing in real projects: **Keychain sign-in**, **token creation**, and **NFT collection creation** — all with safety checks built in so you don’t waste BEE on transactions that are going to fail.
+
+If you want to test it, the docs site is live at **https://hivexph-sdk-frontend.vercel.app/** — feel free to play around, find bugs, suggest improvements, or help beautify this AI slop into something even better.
 
 ```bash
 npm install hivexph-sdk
