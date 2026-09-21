@@ -393,7 +393,7 @@ npm install hivexph-sdk
 
 The docs site with the full API reference and live playground is at **https://hivexph-sdk-frontend.vercel.app/**, and the source is on GitHub at **https://github.com/rhiaji/hivex-sdk**.
 
-This is my first post about hivexph-sdk, so feedback, issues, and ideas are very welcome — drop a comment below or open an issue on GitHub. Thanks for reading, and see you on-chain! 🐝
+This SDK started as tooling for my own Hive projects, and I’m sharing it in case it saves you some time too. If you try it, let me know what works, what breaks, and what’s missing — feedback, issues, and ideas are very welcome. Drop a comment below or open an issue on GitHub. Thanks for reading, and see you on-chain! 🐝
 
 ---
 
