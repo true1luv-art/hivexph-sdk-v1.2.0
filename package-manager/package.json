@@ -58,7 +58,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/true1luv-art/start-hive.git",
+    "url": "https://github.com/rhiaji/hivex-sdk.git",
     "directory": "package-manager"
   }
 }
