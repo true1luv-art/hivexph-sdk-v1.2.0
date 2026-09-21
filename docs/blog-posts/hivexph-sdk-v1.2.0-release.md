@@ -1,4 +1,4 @@
-# Introducing hivexph-sdk v1.2.0 — A TypeScript SDK for Hive Custom JSON, Payments, and Token/NFT Creation
+# Introducing hivexph-sdk v1.2.0 — A TypeScript SDK Built for Hive Developers
 
 *Posted for PeakD — feel free to copy this markdown directly into the editor.*
 
@@ -6,44 +6,49 @@
 
 Hello Hive! 👋
 
-Today I'm excited to share something I've been building: **hivexph-sdk**, a reusable TypeScript SDK for the Hive blockchain — and its first public release on Hive, **v1.2.0**.
+This is my first post here, and I’m excited to share something I’ve been building for the ecosystem: **hivexph-sdk**, a reusable TypeScript SDK for the Hive blockchain.
 
-If you've ever wanted to watch blocks, send payments, parse `custom_json` operations, or create Hive Engine tokens and NFTs from your app without wiring up all the plumbing yourself, this SDK is for you.
+If you’re building apps, games, marketplaces, bots, or services on Hive, you probably know the drill. You want to read blocks, listen for `custom_json` operations, send or validate payments, issue tokens, or create NFT collections — and you end up wiring together RPC calls, payload parsers, signing logic, Hive Keychain browser flows, and Hive Engine contract actions by hand. It works, but it’s a lot of plumbing before you ever get to your actual product.
+
+**hivexph-sdk is that plumbing, packaged up and typed.**
+
+Version **1.2.0** is out now, and it adds the three pieces I kept needing in real projects: **Keychain sign-in**, **token creation**, and **NFT collection creation** — all with safety checks built in so you don’t waste BEE on transactions that are going to fail.
 
 ```bash
 npm install hivexph-sdk
 ```
 
 - 📦 Package: `hivexph-sdk` (ESM only, fully typed)
-- 🏠 Homepage: https://hivexph-sdk-frontend.vercel.app/
-- 💻 Repository: https://github.com/rhiaji/hivex-sdk
+- 🏠 Docs / playground: https://hivexph-sdk-frontend.vercel.app/
+- 💻 Source: https://github.com/rhiaji/hivex-sdk
 - 📜 License: MIT
+
+---
+
+## Why I built this
+
+I kept starting new Hive projects and rewriting the same code:
+
+- Connect to an RPC node and fall back when it’s slow.
+- Watch blocks without skipping them or opening five polling loops.
+- Parse `custom_json` payloads safely and ignore malformed ones.
+- Send HIVE/HBD payments and confirm them.
+- Issue Hive Engine tokens from a backend.
+- Let users sign things in the browser with Hive Keychain.
+
+Every project reinvented the wheel slightly differently. After the third or fourth time, I realized it made more sense to pull it all into one SDK with a single, predictable API — and then open source it so other builders on Hive don’t have to start from scratch.
+
+The goal is simple: **one package, one import, one mental model for reading from and writing to Hive.**
 
 ---
 
 ## What is hivexph-sdk?
 
-A single, runtime-agnostic TypeScript SDK for Hive. It works in **Node 18+, Bun, Deno, browsers, and edge/Worker runtimes** — no React, no DOM APIs at module scope, and no side effects on import. Importing the package opens no connections and starts no streams.
+It is a single-entry-point TypeScript SDK for Hive.
 
-Everything is reachable from one entry point. There are no deep import paths and no secondary entry points:
+It runs almost everywhere: **Node 18+, Bun, Deno, browsers, and edge/Worker runtimes**. It has **no React dependency**, no DOM access at module scope, and **zero side effects on import** — importing it does not open a connection or start a stream.
 
-```
-hive = new HiveClient(options)
- ├── configs         named configurations, account aliases, env references
- ├── accounts        key-free account references
- ├── rpc             blockchain communication
- ├── blocks.watch()  the single canonical block stream
- ├── reader          transaction reading + the unified stream engine
- ├── customJson      build / broadcast / watch standardized payloads
- ├── payments        native + Layer 2 payments with triggers
- ├── issuer          backend token + NFT operations
- ├── keychain        browser transactions through Hive Keychain
- └── keychainIssuer  browser token + NFT operations through Hive Keychain
-```
-
----
-
-## Quick start
+Everything lives behind one class:
 
 ```ts
 import { HiveClient } from "hivexph-sdk";
@@ -54,23 +59,49 @@ const hive = new HiveClient({
     treasury: { accountEnv: "TREASURY_ACCOUNT", keyEnv: "TREASURY_ACTIVE_KEY" },
   },
 });
-
-// Read one transaction
-const tx = await hive.reader.transaction({
-  transactionId: "7b064a84a968caddd2496f3270f0cecafb954217",
-});
-
-// Watch standardized custom_json events
-for await (const event of hive.customJson.watch({ id: "my-app" })) {
-  console.log(event.account, event.action, event.metadata);
-}
 ```
+
+From that one object you get:
+
+```
+hive
+ ├── configs         // named configurations, account aliases, env references
+ ├── accounts        // key-free account references
+ ├── rpc             // blockchain communication
+ ├── beacon          // healthy node discovery
+ ├── builder         // custom_json payload construction
+ ├── parser          // safe custom_json parsing
+ ├── blocks.watch()  // the single canonical block stream
+ ├── reader          // transaction reading + unified stream engine
+ ├── customJson      // build / broadcast / watch standardized payloads
+ ├── payments        // native HIVE/HBD + Layer 2 payments
+ ├── issuer          // backend token + NFT operations
+ ├── keychain        // browser sign-in and signing via Hive Keychain
+ └── keychainIssuer  // browser token + NFT operations via Hive Keychain
+```
+
+No deep imports. No secondary entry points. If you can do it with the SDK, you can reach it from `hivexph-sdk`.
 
 ---
 
-## One streaming engine
+## Who is this for?
 
-`hive.blocks.watch()`, `hive.customJson.watch()`, `hive.payments.watch()` and `hive.reader.stream()` all consume the **same** block reader — no namespace opens its own polling loop. The engine owns head tracking, sequential ordering, historical backfill, the gapless history-to-live transition, retries, and `AbortSignal` cancellation.
+- **Game developers** who want players to buy items with HIVE, HBD, or Hive Engine tokens.
+- **Marketplace builders** who need to verify payments before shipping digital goods.
+- **Bot and service operators** who watch `custom_json` for app-specific actions.
+- **Token creators** who want to launch a Hive Engine token from a script or a UI.
+- **NFT project founders** who want to create collections without doing everything manually in TribalDex.
+- **Anyone** who just wants typed, tested helpers instead of raw RPC and string memos.
+
+If you write TypeScript or JavaScript, this is for you.
+
+---
+
+## The one streaming engine
+
+A lot of SDKs open a new polling loop for every feature. That gets expensive and messy.
+
+`hive.blocks.watch()`, `hive.customJson.watch()`, `hive.payments.watch()`, and `hive.reader.stream()` are all **filtered views over the same block reader**. The engine handles head tracking, sequential ordering, historical backfill, the transition from history to live blocks, retries, and `AbortSignal` cancellation.
 
 ```ts
 for await (const block of hive.blocks.watch({ fromBlock: 90_000_000 })) {
@@ -84,23 +115,37 @@ for await (const block of hive.blocks.watch({ fromBlock: 90_000_000 })) {
 
 Blocks are normalized once, so every consumer sees the same shape regardless of how a node represents operations.
 
+For app-specific events, `customJson.watch()` gives you clean, validated events:
+
+```ts
+for await (const event of hive.customJson.watch({ id: "my-app" })) {
+  console.log(event.account, event.action, event.metadata);
+}
+```
+
+No manual parsing. No noise. Just your app’s events.
+
 ---
 
-## The standardized payload
+## One payload shape everywhere
 
-Every transport (`custom_json`, native transfer memos, Hive Engine memos) carries the same shape:
+Every transport — `custom_json`, native transfer memos, Hive Engine memos — uses the same normalized payload:
 
 ```json
 { "action": "purchase_item", "metadata": { "itemId": "sword_01" } }
 ```
 
-`action` is a required non-empty string, `metadata` is always present after normalization (possibly `null`), and there are no payload timestamps — **block time is the authoritative clock**.
+- `action` is a required non-empty string.
+- `metadata` is always present after normalization (it may be `null`).
+- **Block time is the clock.** There are no payload timestamps, so you never have to trust a client clock.
+
+That means your frontend, backend, bot, and indexer can all speak the same language.
 
 ---
 
-## Payments
+## Payments that are easy to verify
 
-Send and validate native HIVE/HBD or Layer 2 payments with a consistent API:
+Send and validate native HIVE/HBD or Layer 2 payments with the same API:
 
 ```ts
 await hive.payments.hive.transfer({
@@ -114,18 +159,25 @@ await hive.payments.hive.transfer({
 
 const result = await hive.payments.validate({
   transactionId, // the network is detected automatically
-  expected: { account: "bob", symbol: "HIVE", quantity: "10.000", action: "purchase_item" },
+  expected: {
+    account: "bob",
+    symbol: "HIVE",
+    quantity: "10.000",
+    action: "purchase_item",
+  },
 });
 // result.status: "pending" | "success" | "failed" | "invalid" | "not_found"
 ```
 
-> ⚠️ Broadcasting a Layer 2 transfer only proves the `custom_json` reached Hive. Execution success is a separate sidechain check — always validate before crediting anything.
+This matters for any app that delivers something after payment. You get a clear status, and for Layer 2 transfers the SDK reminds you that reaching Hive is not the same as sidechain execution — always validate before crediting.
 
 ---
 
-## Browser vs. backend
+## Backend vs. browser: one SDK, two safe paths
 
-**Backend** issuers resolve an account alias, resolve the signing key lazily from the environment, sign, and broadcast:
+### Backend
+
+Backend issuers resolve an account alias, lazily load the signing key from an environment variable, sign, and broadcast. Quantities are always decimal strings, never floats.
 
 ```ts
 await hive.issuer.token.issue({
@@ -136,10 +188,30 @@ await hive.issuer.token.issue({
 });
 ```
 
-**Browsers** use the Hive Keychain API — no configuration, alias, or private key:
+You can also preview a payload offline without touching a key:
 
 ```ts
-if (!hive.keychain.isAvailable()) throw new Error("Install Hive Keychain");
+const preview = hive.issuer.token.buildIssue({
+  from: hive.accounts.treasury,
+  symbol: "MYTOKEN",
+  account: "alice",
+  quantity: "10.000",
+});
+
+preview.alias;     // "treasury"
+preview.id;        // resolved application id
+preview.json;      // serialized contract action
+preview.operation; // ["custom_json", { ... }]
+```
+
+### Browser
+
+In the browser, use Hive Keychain. No private keys in source code. No configuration with secrets.
+
+```ts
+if (!hive.keychain.isAvailable()) {
+  throw new Error("Please install Hive Keychain");
+}
 
 const signIn = await hive.keychain.requestSignIn({
   username: "alice",
@@ -148,7 +220,18 @@ const signIn = await hive.keychain.requestSignIn({
 // Verify signIn.signature server-side to prove account ownership.
 ```
 
-### Security rules
+And for token transfers:
+
+```ts
+await hive.keychainIssuer.token.transfer({
+  username: "alice",
+  symbol: "MYTOKEN",
+  account: "bob",
+  quantity: "1.000",
+});
+```
+
+### Security rules baked in
 
 - Private keys never live in frontend code or committed configuration — use `keyEnv`.
 - Keys are resolved lazily at signing time and never cached.
@@ -157,9 +240,9 @@ const signIn = await hive.keychain.requestSignIn({
 
 ---
 
-# 🆕 What's new in v1.2.0
+# 🆕 What’s new in v1.2.0
 
-This release is all about **creation flows**: sign-in with Keychain, and creating Hive Engine **tokens** and **NFT collections** — from both the backend and the browser — with safety preflights built in.
+This release focuses on **creation flows**: signing in with Keychain, creating Hive Engine tokens, and creating NFT collections — from both backend scripts and browser UIs — with BEE balance and symbol availability checks before you broadcast.
 
 ## Keychain sign-in
 
@@ -169,12 +252,12 @@ This release is all about **creation flows**: sign-in with Keychain, and creatin
 
 ## Token creation (`tokens.create`)
 
-- `hive.keychainIssuer.token.create()` and `hive.issuer.token.create()` for the Hive Engine `tokens.create` action.
-- **Mandatory creation preflight:** the signing account must hold at least the sidechain token creation fee in BEE, and the token symbol must not already exist. Either failure throws (`INSUFFICIENT_BEE`, `TOKEN_ALREADY_EXISTS`) *before* Keychain opens or a key is resolved. Pass `skipChecks: true` to opt out.
-- `checkCreate()` on both issuers plus the exported `TokenCreationChecker` for read-only fee, BEE balance, and symbol availability lookups.
-- `buildCreate()` offline payload previews on `TokenActionBuilder` and both token issuers.
+- `hive.keychainIssuer.token.create()` and `hive.issuer.token.create()` handle the Hive Engine `tokens.create` action.
+- **Mandatory creation preflight:** the signing account must hold at least the sidechain token creation fee in BEE, and the token symbol must not already exist. Either failure throws (`INSUFFICIENT_BEE`, `TOKEN_ALREADY_EXISTS`) *before* Keychain opens or a key is resolved.
+- `checkCreate()` on both issuers, plus the exported `TokenCreationChecker`, for read-only fee, BEE balance, and symbol availability lookups.
+- `buildCreate()` for offline payload previews.
 - New exports: `TokenCreateInput`, `TokenCreateActionInput`, `TokenCreationCheck`, `TokenCreationCheckInput`, `EngineTokenRow`, `KeychainTokenCreateInput`, the `BEE_SYMBOL` and token limit constants, and the `INSUFFICIENT_BEE` / `TOKEN_ALREADY_EXISTS` error codes.
-- A token creation panel in the playground, covering both the Keychain path and the server path.
+- A token creation panel in the playground covering both the Keychain and server paths.
 - Server-side token creation tests for payload parity, validation, preflight enforcement, and the `skipChecks` opt-out.
 
 ```ts
@@ -199,11 +282,12 @@ await hive.issuer.token.create({
 
 ## NFT collection creation (`nft.create`)
 
-- `hive.keychainIssuer.nft.create()` and `hive.issuer.nft.create()` for the Hive Engine `nft.create` action, following the same flow as token creation. `name` and `symbol` are required; `orgName`, `productName`, `maxSupply`, `website`, `authorizedIssuingAccounts`, and `authorizedIssuingContracts` are optional and omitted from the payload when absent.
-- **NFT creation preflight:** the signing account must hold the NFT creation fee in BEE (100 BEE by default, read from `nft.params`) and the NFT symbol must not already exist. Either failure throws (`INSUFFICIENT_BEE`, `NFT_ALREADY_EXISTS`) before Keychain opens or a key is resolved. Pass `skipChecks: true` to opt out.
-- `checkCreate()` and `buildCreate()` on both NFT issuers plus the exported `NftCreationChecker` for read-only fee, BEE balance, and NFT symbol availability lookups.
+- `hive.keychainIssuer.nft.create()` and `hive.issuer.nft.create()` handle the Hive Engine `nft.create` action.
+- Required: `name` and `symbol`. Optional: `orgName`, `productName`, `maxSupply`, `website`, `authorizedIssuingAccounts`, `authorizedIssuingContracts`.
+- **NFT creation preflight:** the signing account must hold the NFT creation fee in BEE (100 BEE by default, read from `nft.params`) and the NFT symbol must not already exist. Either failure throws (`INSUFFICIENT_BEE`, `NFT_ALREADY_EXISTS`) before Keychain opens or a key is resolved.
+- `checkCreate()` and `buildCreate()` on both NFT issuers, plus the exported `NftCreationChecker`.
 - New exports: `NftCreateInput`, `NftCreateActionInput`, `NftCreationCheck`, `NftCreationCheckInput`, `EngineNftRow`, `KeychainNftCreateInput`, the NFT creation fee and field limit constants, and the `NFT_ALREADY_EXISTS` error code.
-- An NFT creation panel in the playground, covering payload preview, server and Keychain preflight checks, and Keychain broadcast.
+- An NFT creation panel in the playground.
 - NFT creation tests for payload shape, field validation, preflight failures, and the `skipChecks` opt-out.
 
 ```ts
@@ -211,9 +295,9 @@ await hive.keychainIssuer.nft.create({
   username: "alice",
   name: "My Collection",
   symbol: "MYNFT",
-  orgName: "My Org",           // optional
-  productName: "My Product",   // optional
-  maxSupply: "1000",           // optional, unlimited when omitted
+  orgName: "My Org",              // optional
+  productName: "My Product",      // optional
+  maxSupply: "1000",              // optional, unlimited when omitted
   website: "https://example.com", // optional
 });
 
@@ -222,9 +306,11 @@ const check = await hive.keychainIssuer.nft.checkCreate({ username: "alice", sym
 const payload = hive.keychainIssuer.nft.buildCreate({ name: "My Collection", symbol: "MYNFT" });
 ```
 
+For both tokens and NFTs, pass `skipChecks: true` to broadcast without the preflight when you know what you’re doing.
+
 ## Documentation
 
-- The sign-in, token creation, and NFT creation flows are now documented in the README, API reference, and release notes.
+The sign-in, token creation, and NFT creation flows are documented in the README, API reference, and release notes at the docs site.
 
 ---
 
@@ -262,8 +348,8 @@ npm install hivexph-sdk
 
 The docs site with the full API reference and live playground is at **https://hivexph-sdk-frontend.vercel.app/**, and the source is on GitHub at **https://github.com/rhiaji/hivex-sdk**.
 
-Feedback, issues, and ideas are very welcome — drop a comment below or open an issue on GitHub. Thanks for reading, and see you on-chain! 🐝
+This is my first time sharing a project on Hive, so feedback, issues, and ideas are very welcome — drop a comment below or open an issue on GitHub. Thanks for reading, and see you on-chain! 🐝
 
 ---
 
-*#hive #development #typescript #sdk #hiveengine #nft #programming #opensource*
+*#hive #development #typescript #sdk #hiveengine #nft #programming #opensource #blockchain #customjson*
