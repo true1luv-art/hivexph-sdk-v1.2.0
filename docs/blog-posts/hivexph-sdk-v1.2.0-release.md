@@ -346,7 +346,6 @@ First stable release. The public API is frozen under semver.
 
 ---
 
-
 ## What’s next: v1.3.0 and the hivexph platform
 
 v1.2.0 is the foundation. **v1.3.0** will add the pieces needed for real marketplaces:
