@@ -1,5 +1,12 @@
 {
-  "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.ts", "eslint.config.js"],
+  "exclude": ["package-manager/dist"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "package-manager/**/*.ts",
+    "vite.config.ts",
+    "eslint.config.js"
+  ],
   "compilerOptions": {
     "target": "ES2022",
     "jsx": "react-jsx",
@@ -24,7 +31,9 @@
     "exactOptionalPropertyTypes": true,
     "noUncheckedSideEffectImports": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@package": ["./package-manager/index.ts"],
+      "@package/*": ["./package-manager/*"]
     }
   }
 }
