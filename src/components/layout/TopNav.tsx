@@ -41,7 +41,7 @@ function SidebarToggle() {
       onClick={() => toggleSidebar(visible)}
       aria-label={label}
       title={label}
-      className="mr-1 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-chrome-border/60 bg-chrome/50 text-chrome-foreground shadow-sm transition-colors hover:bg-chrome-border hover:text-chrome-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      className="mr-1 inline-flex shrink-0 items-center justify-center text-chrome-muted transition-colors hover:text-chrome-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
     >
       <Icon className="size-4" />
     </button>
