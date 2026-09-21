@@ -342,6 +342,19 @@ First stable release. The public API is frozen under semver.
 
 ---
 
+## What’s next: v1.3.0 and the hivexph platform
+
+v1.2.0 is the foundation. **v1.3.0** will add the pieces needed for real marketplaces:
+
+- **Token market trade** operations
+- **NFT marketplace** functions
+
+These are being built so I can upgrade my existing **hivexph** platform — which already has token trading, an NFT marketplace, and other Hive tools — using a single, well-tested SDK instead of scattering the same logic across multiple projects. The SDK is meant to power hivexph and any future Hive apps I build, so every feature is generic, reusable, and safe to drop into a browser or backend.
+
+If you’re building something similar, following along will let you reuse the same primitives in your own app.
+
+---
+
 ## Try it out
 
 ```bash
