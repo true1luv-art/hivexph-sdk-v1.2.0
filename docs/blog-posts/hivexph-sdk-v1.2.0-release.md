@@ -29,6 +29,8 @@ npm install hivexph-sdk
 
 ## Why I built this
 
+I built this SDK **for myself first**.
+
 I kept starting new Hive projects and rewriting the same code:
 
 - Connect to an RPC node and fall back when it’s slow.
@@ -40,7 +42,7 @@ I kept starting new Hive projects and rewriting the same code:
 
 Every project reinvented the wheel slightly differently. After the third or fourth time, I realized it made more sense to pull it all into one SDK with a single, predictable API — and then open source it so other builders on Hive don’t have to start from scratch.
 
-The goal is simple: **one package, one import, one mental model for reading from and writing to Hive.**
+This SDK was made to power my own apps first, especially the upcoming rebuild of **hivexph**, but I hope it ends up useful for anyone building on Hive. The goal is simple: **one package, one import, one mental model for reading from and writing to Hive.**
 
 ---
 
@@ -391,7 +393,7 @@ npm install hivexph-sdk
 
 The docs site with the full API reference and live playground is at **https://hivexph-sdk-frontend.vercel.app/**, and the source is on GitHub at **https://github.com/rhiaji/hivex-sdk**.
 
-This is my first post about hivexph-sdk, so feedback, issues, and ideas are very welcome — drop a comment below or open an issue on GitHub. Thanks for reading, and see you on-chain! 🐝
+This SDK started as tooling for my own Hive projects, and I’m sharing it in case it saves you some time too. If you try it, let me know what works, what breaks, and what’s missing — feedback, issues, and ideas are very welcome. Drop a comment below or open an issue on GitHub. Thanks for reading, and see you on-chain! 🐝
 
 ---
 
