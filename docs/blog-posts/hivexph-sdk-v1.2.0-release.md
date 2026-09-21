@@ -14,7 +14,7 @@ I built this slop to stop rewriting the same Hive plumbing in every project: con
 
 **hivexph-sdk is that plumbing, packaged up and typed.**
 
-Version **1.2.0** is out now, and it adds the three pieces I kept needing in real projects: **Keychain sign-in**, **token creation**, and **NFT collection creation** — all with safety checks built in so you don’t waste BEE on transactions that are going to fail.
+Version **1.2.0** is out now, and it adds the three pieces I kept needing in real projects: **Keychain sign-in**, **token creation**, and **NFT collection creation** — each with preflight checks that catch missing balances, duplicate symbols, or bad inputs before anything is broadcast.
 
 If you want to test it, the docs site is live at **https://hivexph-sdk-frontend.vercel.app/** — feel free to play around, find bugs, suggest improvements, or help beautify this AI slop into something even better.
 
