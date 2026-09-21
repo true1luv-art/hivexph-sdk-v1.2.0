@@ -149,7 +149,7 @@ export function SideNav({ sections, label }: { sections: NavSection[]; label: st
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 1023px)");
+    const mq = window.matchMedia("(max-width: 767px)");
     const update = () => setIsMobile(mq.matches);
     update();
     mq.addEventListener("change", update);
@@ -187,7 +187,7 @@ export function SideNav({ sections, label }: { sections: NavSection[]; label: st
 
       {/* Desktop: inline collapsible sidebar */}
       {visible && !isMobile && (
-        <aside className="hidden w-64 shrink-0 border-r border-border pr-6 lg:block">
+        <aside className="hidden w-64 shrink-0 border-r border-border pr-6 md:block">
           <div className="nice-scroll sticky top-[6.5rem] max-h-[calc(100vh-6.5rem)] overflow-y-auto overscroll-contain pb-10 pr-2">
             <p className="mb-2 px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.18em] text-muted-foreground/80">
               {label}
