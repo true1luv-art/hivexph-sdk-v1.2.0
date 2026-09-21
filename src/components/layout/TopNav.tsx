@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { BookOpen, Code2, PanelLeftClose, PanelLeftOpen } from "lucide-react";
-import { PACKAGE_LINKS, SITE, versionLabel } from "@/lib/site-config";
+import { BookOpen, Code2, Github, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { PACKAGE_LINKS, SITE } from "@/lib/site-config";
 import { toggleSidebar, useSidebarOpen } from "@/lib/sidebar-store";
 import { SearchDialog } from "./SearchDialog";
 
