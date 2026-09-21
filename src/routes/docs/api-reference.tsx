@@ -264,7 +264,7 @@ await hive.keychainIssuer.token.transfer({
       <DocSection id="sign-in" title="Keychain sign-in">
         <Prose>
           <p>
-            Added in 1.1.2. <code>requestSignIn()</code> asks Hive Keychain to sign a challenge
+            Added in 1.2.0. <code>requestSignIn()</code> asks Hive Keychain to sign a challenge
             message with the account's key, so your backend can verify the signature and issue a
             session. Use a server-issued nonce in the message to prevent replays.
           </p>
@@ -312,7 +312,7 @@ await fetch("/api/auth/login", {
       <DocSection id="creation" title="Token & NFT creation">
         <Prose>
           <p>
-            Added in 1.1.2. Both a token and an NFT cost 100 BEE to create on Hive Engine and both
+            Added in 1.2.0. Both a token and an NFT cost 100 BEE to create on Hive Engine and both
             symbols are unique on the sidechain, so every <code>create()</code> runs a preflight
             first: the signing account must hold the fee in BEE and the symbol must still be free.
             A failure throws <code>INSUFFICIENT_BEE</code>, <code>TOKEN_ALREADY_EXISTS</code> or{" "}

@@ -9,7 +9,7 @@ export const SITE = {
   description:
     "A TypeScript SDK for building, broadcasting, reading and streaming Hive Custom JSON transactions.",
   /** Mirrors package-manager/package.json — update both together when releasing. */
-  version: "1.1.2",
+  version: "1.2.0",
 } as const;
 
 /**
