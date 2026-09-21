@@ -20,7 +20,7 @@ function SidebarToggle() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 1279px)");
+    const mq = window.matchMedia("(max-width: 1023px)");
     const update = () => setIsMobile(mq.matches);
     update();
     mq.addEventListener("change", update);
@@ -41,7 +41,7 @@ function SidebarToggle() {
       onClick={() => toggleSidebar(visible)}
       aria-label={label}
       title={label}
-      className="mr-1 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-chrome-muted transition-colors hover:bg-chrome-border/60 hover:text-chrome-foreground"
+      className="mr-1 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-chrome-border/60 bg-chrome/50 text-chrome-foreground shadow-sm transition-colors hover:bg-chrome-border hover:text-chrome-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
     >
       <Icon className="size-4" />
     </button>

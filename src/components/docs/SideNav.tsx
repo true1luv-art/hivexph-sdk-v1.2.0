@@ -149,7 +149,7 @@ export function SideNav({ sections, label }: { sections: NavSection[]; label: st
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 1279px)");
+    const mq = window.matchMedia("(max-width: 1023px)");
     const update = () => setIsMobile(mq.matches);
     update();
     mq.addEventListener("change", update);
@@ -162,7 +162,7 @@ export function SideNav({ sections, label }: { sections: NavSection[]; label: st
     <>
       {/* Small screens: overlay drawer */}
       {visible && isMobile && (
-        <div className="fixed inset-x-0 bottom-0 top-25 z-40">
+        <div className="fixed inset-x-0 bottom-0 top-[6.5rem] z-40">
           <button
             type="button"
             aria-label="Close navigation"
@@ -187,8 +187,8 @@ export function SideNav({ sections, label }: { sections: NavSection[]; label: st
 
       {/* Desktop: inline collapsible sidebar */}
       {visible && !isMobile && (
-        <aside className="hidden w-64 shrink-0 border-r border-border pr-6 xl:block">
-          <div className="nice-scroll sticky top-26 max-h-[calc(100vh-6.5rem)] overflow-y-auto overscroll-contain pb-10 pr-2">
+        <aside className="hidden w-64 shrink-0 border-r border-border pr-6 lg:block">
+          <div className="nice-scroll sticky top-[6.5rem] max-h-[calc(100vh-6.5rem)] overflow-y-auto overscroll-contain pb-10 pr-2">
             <p className="mb-2 px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.18em] text-muted-foreground/80">
               {label}
             </p>
