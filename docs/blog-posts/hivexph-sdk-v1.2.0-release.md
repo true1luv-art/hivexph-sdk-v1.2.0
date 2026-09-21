@@ -6,15 +6,17 @@
 
 Hello Hive! 👋
 
-This is my first post about this project, and I’m excited to share something I’ve been building for the ecosystem: **hivexph-sdk**, a reusable TypeScript SDK for the Hive blockchain.
+Welcome to my newly created AI slop SDK — **hivexph-sdk**, a reusable TypeScript SDK for the Hive blockchain.
 
 > 📝 *This post was generated with the help of AI to summarize the full feature set of the SDK from the README, API reference, and changelog.*
 
-If you’re building apps, games, marketplaces, bots, or services on Hive, you probably know the drill. You want to read blocks, listen for `custom_json` operations, send or validate payments, issue tokens, or create NFT collections — and you end up wiring together RPC calls, payload parsers, signing logic, Hive Keychain browser flows, and Hive Engine contract actions by hand. It works, but it’s a lot of plumbing before you ever get to your actual product.
+I built this slop to stop rewriting the same Hive plumbing in every project: connecting to RPC nodes, watching blocks, parsing `custom_json`, sending and validating payments, issuing tokens, and creating NFT collections. It was a lot of repetitive wiring before I could ever get to the actual product, so I packaged it all into one typed SDK with a single, predictable API.
 
 **hivexph-sdk is that plumbing, packaged up and typed.**
 
 Version **1.2.0** is out now, and it adds the three pieces I kept needing in real projects: **Keychain sign-in**, **token creation**, and **NFT collection creation** — all with safety checks built in so you don’t waste BEE on transactions that are going to fail.
+
+If you want to test it, the docs site is live at **https://hivexph-sdk-frontend.vercel.app/** — feel free to play around, find bugs, suggest improvements, or help beautify this AI slop into something even better.
 
 ```bash
 npm install hivexph-sdk
@@ -341,34 +343,6 @@ First stable release. The public API is frozen under semver.
 - **One write path per environment** — backend issuance through `hive.issuer`, browser issuance through `hive.keychainIssuer`, both emitting byte-identical contract actions from shared builders and validators.
 - Pre-1.0 cleanup: removed the `Signer` system, executors, dry-run mode, legacy streams/builders, and all compatibility shims; `mint` naming is now `issue`.
 - ESM build with generated type declarations; zero runtime Node built-ins and no DOM access at module scope.
-
----
-
-## A totally real conversation about this SDK
-
-> **Me:** I built a TypeScript SDK for Hive.
->
-> **Friend:** Nice. How much of it did *you* actually write?
->
-> **Me:** I typed `npm init`. After that, it was mostly me, a language model, and a prayer to the Hive gods.
->
-> **Friend:** So it’s an AI slop SDK?
->
-> **Me:** Yes. But it is *my* AI slop SDK, and it has tests.
->
-> **Friend:** Tests?
->
-> **Me:** Well, the tests were also AI slop. It is slop all the way down.
->
-> **Friend:** Does it work?
->
-> **Me:** It creates tokens, creates NFT collections, signs in with Keychain, and watches blocks without opening twelve polling loops. So yes, it works. Beautifully. Terrifyingly.
->
-> **Friend:** I’m installing it.
->
-> **Me:** That’s the spirit. Embrace the slop. Just validate your payments server-side first.
-
-In all seriousness, the SDK is a real tool with real tests, a real docs site, and real use cases. The “slop” part is just the modern developer experience of building with a very enthusiastic pair programmer that occasionally hallucinates a `top-25` Tailwind class.
 
 ---
 
