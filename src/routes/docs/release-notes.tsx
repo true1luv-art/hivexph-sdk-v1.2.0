@@ -9,12 +9,12 @@ export const Route = createFileRoute("/docs/release-notes")({
       {
         name: "description",
         content:
-          "HiveXPH SDK v1.1.2 adds Keychain sign-in and checked Hive Engine token creation, on the v1.0.0 stable foundation.",
+          "HiveXPH SDK v1.2.0 adds Keychain sign-in and checked Hive Engine token creation, on the v1.0.0 stable foundation.",
       },
       { property: "og:title", content: "Release notes — HiveXPH SDK" },
       {
         property: "og:description",
-        content: "What shipped in v1.1.2, v1.0.0 and what the stability promise covers.",
+        content: "What shipped in v1.2.0, v1.0.0 and what the stability promise covers.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/docs/release-notes")({
 });
 
 const toc = [
-  { id: "v112", label: "v1.1.2" },
+  { id: "v120", label: "v1.2.0" },
   { id: "v1", label: "v1.0.0" },
   { id: "policy", label: "Stability policy" },
 ];
@@ -38,7 +38,7 @@ function ReleaseNotesPage() {
       path="/docs/release-notes"
       toc={toc}
     >
-      <DocSection id="v112" title="v1.1.2 — Keychain sign-in + checked token creation">
+      <DocSection id="v120" title="v1.2.0 — Keychain sign-in + checked token creation">
         <Prose>
           <ul className="list-disc space-y-1 pl-5">
             <li>
