@@ -346,33 +346,6 @@ First stable release. The public API is frozen under semver.
 
 ---
 
-## A totally real conversation about this SDK
-
-> **Me:** I built a TypeScript SDK for Hive.
->
-> **Friend:** Nice. How much of it did *you* actually write?
->
-> **Me:** I typed `npm init`. After that, it was mostly me, a language model, and a prayer to the Hive gods.
->
-> **Friend:** So it’s an AI slop SDK?
->
-> **Me:** Yes. But it is *my* AI slop SDK, and it has tests.
->
-> **Friend:** Tests?
->
-> **Me:** Well, the tests were also AI slop. It is slop all the way down.
->
-> **Friend:** Does it work?
->
-> **Me:** It creates tokens, creates NFT collections, signs in with Keychain, and watches blocks without opening twelve polling loops. So yes, it works. Beautifully. Terrifyingly.
->
-> **Friend:** I’m installing it.
->
-> **Me:** That’s the spirit. Embrace the slop. Just validate your payments server-side first.
-
-In all seriousness, the SDK is a real tool with real tests, a real docs site, and real use cases. The “slop” part is just the modern developer experience of building with a very enthusiastic pair programmer that occasionally hallucinates a `top-25` Tailwind class.
-
----
 
 ## What’s next: v1.3.0 and the hivexph platform
 
